@@ -1,0 +1,89 @@
+/* てんしの おしごと（モンテッソーリの教具あそび） */
+@font-face { font-family: "Nurie"; src: url("assets/fonts/nurie_font.otf") format("opentype"); font-display: block; }
+
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden; background: #f3e6d3;
+  touch-action: none; overscroll-behavior: none;
+  -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+  font-family: "Nurie", sans-serif;
+}
+img { -webkit-user-drag: none; user-select: none; pointer-events: none; }
+
+#stage { position: fixed; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; background: #f3e6d3; }
+.screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden; }
+
+/* 文字（白いふちどり） */
+.lbl {
+  position: absolute; text-align: center; white-space: nowrap;
+  line-height: 1.2; pointer-events: none;
+}
+
+/* 丸いボタン */
+.btn {
+  position: absolute; border-radius: 50%; border: 6px solid #fff;
+  box-sizing: border-box; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+}
+.btn img { width: 60%; height: 60%; object-fit: contain; }
+.bounce { animation: bounce 0.18s ease-out; }
+@keyframes bounce { 0% { transform: scale(1); } 35% { transform: scale(0.88); } 100% { transform: scale(1); } }
+
+/* はじめる */
+.startbtn {
+  position: absolute; width: 320px; height: 110px; border-radius: 55px;
+  background: #e98aa3; border: 8px solid #fff; box-sizing: border-box;
+  box-shadow: 0 6px 6px rgba(120,60,60,0.25);
+  font-size: 50px; color: #fff;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+
+/* たな */
+.shelf-board { position: absolute; background: linear-gradient(#c9935f, #a8743f); border-radius: 10px; box-shadow: 0 8px 0 rgba(90,55,25,0.35); }
+.shelf-item { position: absolute; cursor: pointer; }
+.tape {
+  position: absolute; left: 50%; top: 45%; white-space: nowrap; padding: 4px 14px;
+  background: #ffe9a8; border: 4px solid #8a6a3a; border-radius: 10px; color: #6b5030;
+  transform: translate(-50%,-50%) rotate(-8deg); font-size: 26px;
+}
+
+/* 立方体（ピンクタワー） */
+.cube { position: absolute; transform-origin: 50% 100%; }
+.cube .f, .cube .t, .cube .s { position: absolute; box-sizing: border-box; }
+.cube .f { background: #f2a7b9; border: 1px solid rgba(160,70,95,0.35); }
+.cube .t { background: #f9cbd6; border: 1px solid rgba(160,70,95,0.25); transform-origin: 0 100%; transform: skewX(-45deg); }
+.cube .s { background: #df8ea3; border: 1px solid rgba(160,70,95,0.3); transform-origin: 0 0; transform: skewY(-45deg); }
+.cube.lift { filter: drop-shadow(0 14px 10px rgba(80,40,40,0.28)); }
+
+/* 縦向きの案内 */
+#rotate {
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; background: #6b5030;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+}
+#rotate .phone {
+  width: 32vmin; height: 57.6vmin; background: #fff; border-radius: 28px;
+  border: 14px solid #e98aa3; box-sizing: border-box; animation: turn 2.5s infinite;
+}
+#rotate .msg { margin-top: 9vmin; color: #c45d7a; font-size: 11vw;  }
+@keyframes turn { 0%, 20% { transform: rotate(0deg); } 52%, 84% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
+@media (orientation: portrait) { #rotate { display: flex; } }
+
+/* できたあと、「もういちど」ボタンが そっと さそう（ごほうびではなく、くり返しへの さそい） */
+.btn.invite { animation: invite 1.6s ease-in-out infinite; }
+@keyframes invite { 0%, 100% { box-shadow: 0 4px 0 rgba(0,0,0,0.12), 0 0 0 0 rgba(255,246,200,0.9); } 50% { box-shadow: 0 4px 0 rgba(0,0,0,0.12), 0 0 0 14px rgba(255,246,200,0); transform: scale(1.06); } }
+
+/* ふちどり文字（outlineText）：うしろの ふち と、前の 文字 */
+.olw { position: relative; display: inline-block; white-space: nowrap; }
+.olb { position: absolute; left: 0; top: 0; pointer-events: none; }
+.olf { position: relative; }
+#rotate .msg .olb { -webkit-text-stroke: 2.5vw #fff; color: #fff; }
+
+/* 絵の ボタン（ホーム・もういちど・ヒント） */
+.btn.artbtn { border: none; background: transparent; box-shadow: none; }
+.btn.artbtn img { width: 100%; height: 100%; filter: drop-shadow(0 3px 2px rgba(90,55,25,0.25)); }
+.btn.artbtn.invite img { filter: drop-shadow(0 0 10px rgba(255,236,160,0.95)); }
+/* おてほんの 手（ほかの ボタンと そろえた 丸） */
+.btn.handbtn { background: radial-gradient(circle at 40% 35%, #ffe7a6, #f6c95c 70%); border: 7px solid #fff6e2; box-shadow: 0 3px 3px rgba(90,55,25,0.25); }
+.cube img { -webkit-user-drag: none; }
